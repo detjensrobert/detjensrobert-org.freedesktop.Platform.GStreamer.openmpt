@@ -53,6 +53,7 @@ modules:
       - type: git
         url: https://gitlab.freedesktop.org/gstreamer/gstreamer.git
         tag: 1.20.6 # matches o.fd.P//22.08
+        disable-submodules: true
 
     # only install the plugin, none of the other gstreamer files
     no-make-install: true
