@@ -1,7 +1,7 @@
 id: org.freedesktop.Platform.GStreamer.modplug
-default-branch: '22.08'
+default-branch: '21.08'
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
 build-extension: true
 separate-locales: false
@@ -12,7 +12,7 @@ build-options:
   prefix: /usr/lib/extensions/gstreamer-1.0/modplug
   prepend-pkg-config-path: /usr/lib/extensions/gstreamer-1.0/modplug/lib/pkgconfig
   env:
-    FLATPAK_LIBDIR: /usr/lib/extensions/gstreamer-1.0/modplug/
+    FLATPAK_LIBDIR: /usr/lib/extensions/gstreamer-1.0/modplug
 
 cleanup:
   - /include
@@ -27,16 +27,9 @@ modules:
   - name: libmodplug
     buildsystem: autotools
     sources:
-      # taken from Arch Linux PKGBUILD: https://gitlab.archlinux.org/archlinux/packaging/packages/libmodplug
       - type: archive
         url: https://downloads.sourceforge.net/modplug-xmms/libmodplug-0.8.9.0.tar.gz
         sha256: 457ca5a6c179656d66c01505c0d95fafaead4329b9dbaa0f997d00a3508ad9de
-      - type: patch
-        path: libmodplug-0.8.9.0-no-fast-math.patch
-      # regenerate aclocal.m4 after patching configure.ac
-      - type: shell
-        commands:
-          - autoreconf -vfi
 
   - name: gstreamer-plugins-bad
     buildsystem: meson
@@ -49,11 +42,15 @@ modules:
       - -Dgst-plugins-bad:modplug=enabled
       - -Dgst-full-plugins=modplug
       - --buildtype=release
+    build-options:
+      build-args:
+        - --share=network # for meson subprojects :/
     sources:
+      # gstreamer 1.18 was pre-monorepo
       - type: git
-        url: https://gitlab.freedesktop.org/gstreamer/gstreamer.git
-        tag: 1.20.6 # matches o.fd.P//22.08
-        disable-submodules: true
+        url: https://gitlab.freedesktop.org/gstreamer/gst-build.git
+        tag: 1.18.6 # matches o.fd.P//21.08
+        # disable-submodules: true
     # only install the plugin, none of the other gstreamer files
     no-make-install: true
     post-install:
