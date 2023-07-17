@@ -20,5 +20,3 @@ jobs:
         with:
           bundle: org.freedesktop.Platform.GStreamer.openmpt.flatpak
           manifest-path: org.freedesktop.Platform.GStreamer.openmpt.yaml
-          branch: 22.08
-          runtime: true
