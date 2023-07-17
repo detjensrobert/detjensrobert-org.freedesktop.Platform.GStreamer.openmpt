@@ -15,8 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+      # this sucks for building runtimes
+      - uses: detjensrobert/flatpak-github-actions/flatpak-builder@flatpak-type
         with:
           bundle: org.freedesktop.Platform.GStreamer.openmpt.flatpak
           manifest-path: org.freedesktop.Platform.GStreamer.openmpt.yaml
-          build-bundle: false # action does not support runtime bundles
+          branch: 22.08
+          runtime: true
