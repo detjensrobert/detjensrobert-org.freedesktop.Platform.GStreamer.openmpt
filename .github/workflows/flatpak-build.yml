@@ -1,19 +1,22 @@
+name: Build
+
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
   pull_request:
-name: CI
+
 jobs:
   flatpak:
-    name: "Flatpak"
+    name: Flatpak
     runs-on: ubuntu-latest
     container:
       image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
       options: --privileged
     steps:
-    - uses: actions/checkout@v3
-    - uses: flatpak/flatpak-github-actions/flatpak-builder@v6.1
-      with:
-        bundle: org.freedesktop.Platform.GStreamer.modplug.flatpak
-        manifest-path: org.freedesktop.Platform.GStreamer.modplug.yaml
-        cache-key: flatpak-builder-${{ github.sha }}
+      - uses: actions/checkout@v3
+
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: gstreamer-openmpt.flatpak
+          manifest-path: org.freedesktop.Platform.GStreamer.openmpt.yaml
+          cache-key: flatpak-builder-${{ github.sha }}
