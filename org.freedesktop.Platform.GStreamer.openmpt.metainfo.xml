@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>org.freedesktop.Platform.GStreamer.openmpt</id>
+
+  <name>OpenMPT GStreamer Plugin</name>
+  <summary>Play tracker music using GStreamer via the libopenmpt plugin</summary>
+
+  <description>
+    <p>
+      Adds support for tracker music files (MOD, XM, S3M, IT, MPTM, etc)  to GStreamer using the libopenmpt plugin.
+    </p>
+  </description>
+
+  <extends>org.freedesktop.Platform.GStreamer</extends>
+
+  <url type="homepage">https://lib.openmpt.org/libopenmpt</url>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>BSD-3-Clause AND MIT</project_license>
+</component>
