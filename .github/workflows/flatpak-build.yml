@@ -12,10 +12,27 @@ jobs:
     container:
       image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
       options: --privileged
+
+    strategy:
+      matrix:
+        arch: [x86_64, aarch64]
+      # Don't fail the whole workflow if one architecture fails
+      fail-fast: false
     steps:
       - uses: actions/checkout@v3
 
-      # this sucks for building runtimes
+      # Docker is required by the docker/setup-qemu-action which enables emulation
+      - name: Install deps
+        if: ${{ matrix.arch != 'x86_64' }}
+        run: |
+          dnf -y install docker
+      - name: Set up QEMU
+        if: ${{ matrix.arch != 'x86_64' }}
+        id: qemu
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm64
+
       - uses: detjensrobert/flatpak-github-actions/flatpak-builder@flatpak-type
         with:
           bundle: org.freedesktop.Platform.GStreamer.openmpt.flatpak
